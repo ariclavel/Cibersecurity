@@ -25,27 +25,7 @@ def getForms(url):
     for m in arr:
         print(m)"""
    
-def get_form_details(form):
-   
-    details = {}
-    # get the form action (target url)
-    action = form.attrs.get("action", "").lower()
-    # get the form method (POST, GET, etc.)
-    method = form.attrs.get("method", "get").lower()
-    # get all the input details such as type and name
-    inputs = []
-    for input_tag in form.find_all("input"):
-        input_type = input_tag.attrs.get("type", "text")
-        input_name = input_tag.attrs.get("name")
-        inputs.append({"type": input_type, "name": input_name})
-    # put everything to the resulting dictionary
-    details["action"] = action
-    details["method"] = method
-    details["inputs"] = inputs
-    return details
-
-
-def submit_form(form_details, url, value):
+def submitForm(form_details, url, value):
    
     # construct the full URL (if the url provided in action is relative)
     target_url = urljoin(url, form_details["action"])
@@ -109,7 +89,7 @@ def detectXSS(url):
             details["action"] = action
             details["method"] = method
             details["inputs"] = inputs
-            cont = submit_form(details, url, js_script).content.decode()
+            cont = submitForm(details, url, js_script).content.decode()
           
             if js_script in cont:
                 print(f"XSS DETECTED!!!!!!")

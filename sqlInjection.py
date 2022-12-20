@@ -22,33 +22,8 @@ def getForms(url):
     print("ahor next")
     for m in arr:
         print(m)"""
-def get_form_details(form):
-    """
-    This function extracts all possible useful information about an HTML `form`
-    """
-    details = {}
-    # get the form action (target url)
-    try:
-        action = form.attrs.get("action").lower()
-    except:
-        action = None
-    # get the form method (POST, GET, etc.)
-    method = form.attrs.get("method", "get").lower()
-    # get all the input details such as type and name
-    inputs = []
-    for input_tag in form.find_all("input"):
-        input_type = input_tag.attrs.get("type", "text")
-        input_name = input_tag.attrs.get("name")
-        input_value = input_tag.attrs.get("value", "")
-        inputs.append({"type": input_type, "name": input_name, "value": input_value})
-    # put everything to the resulting dictionary
-    details["action"] = action
-    details["method"] = method
-    details["inputs"] = inputs
-    return details
 
-
-def is_vulnerable(response):
+def errors(response):
    
     errors = {
         # MySQL
@@ -67,26 +42,48 @@ def is_vulnerable(response):
     return False
 
 
-def scan_sql_injection(url):
+def attackSql(url):
     # test on URL
-    for c in "\"'":
+    """for c in "\"'":
         # add quote/double quote character to the URL
         new_url = f"{url}{c}"
         print("[!] Trying", new_url)
         # make the HTTP request
         res = s.get(new_url)
-        if is_vulnerable(res):
+        if errors(res):
             # SQL Injection detected on the URL itself, 
             # no need to preceed for extracting forms and submitting them
-            print("[+] SQL Injection vulnerability detected, link:", new_url)
+            print("SQL Injection vulnerability detected!!!!!!")
             return
-    # test on HTML forms
+    # test on HTML forms"""
     forms = getForms(url)
-    print(f"[+] Detected {len(forms)} forms on {url}.")
+    if(len(forms) == 0):
+        print("No forms detected")
+        return
+    print(f"{len(forms)} forms")
     for form in forms:
-        form_details = get_form_details(form)
+        form_details = {}
+        #We take the attributes action like in the other attack
+        try:
+            action = form.attrs.get("action").lower()
+        except:
+            action = None
+        # to know if it s post or get and aply it
+        method = form.attrs.get("method", "get").lower()
+        # get all the input details such as type and name
+        inputs = []
+        for input_tag in form.find_all("input"):
+            input_type = input_tag.attrs.get("type", "text")
+            input_name = input_tag.attrs.get("name")
+            input_value = input_tag.attrs.get("value", "")
+            inputs.append({"type": input_type, "name": input_name, "value": input_value})
+        # put everything to the resulting dictionary
+        form_details["action"] = action
+        form_details["method"] = method
+        form_details["inputs"] = inputs
+      
         for c in "\"'":
-            # the data body we want to submit
+            # meke a request with data that we declare here
             data = {}
             for input_tag in form_details["inputs"]:
                 if input_tag["type"] == "hidden" or input_tag["value"]:
@@ -99,19 +96,19 @@ def scan_sql_injection(url):
                 elif input_tag["type"] != "submit":
                     # all others except submit, use some junk data with special character
                     data[input_tag["name"]] = f"test{c}"
-            # join the url with the action (form request URL)
+            # different request depending on the method
             url = urljoin(url, form_details["action"])
             if form_details["method"] == "post":
                 res = s.post(url, data=data)
             elif form_details["method"] == "get":
                 res = s.get(url, params=data)
-            # test whether the resulting page is vulnerable
-            if is_vulnerable(res):
-                print("[+] SQL Injection vulnerability detected, link:", url)
-                print("[+] Form:")
+            # see if the error exists
+            if errors(res):
+                print("SQL Injection vulnerability detected!!!!!!")
+                print("Form:")
                 pprint(form_details)
                 break
 
 if __name__ == "__main__":
     url = "http://testphp.vulnweb.com/artists.php?artist=1"
-    scan_sql_injection(url)
+    attackSql(url)
