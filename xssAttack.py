@@ -2,14 +2,37 @@ from socket import *
 import optparse
 import requests
 from pprint import pprint
+from urllib.request import urlopen
 from bs4 import BeautifulSoup as bs
 from urllib.parse import urljoin
 
 #https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html
 
 def get_all_forms(url):
+    #bs = BeautifulSoup(r.read(), "html.parser")
     soup = bs(requests.get(url).content, "html.parser")
-    return soup.find_all("form")
+    #r = urlopen(url)
+    
+    print(soup)
+
+    return soup.find_all("input")
+   
+    
+    
+    """arr = []
+    for link in bs.find_all("a"):
+        lien = link.get("href")
+        print(lien)
+        
+        if(lien[-1] == "l" and lien[-2] == "m" and lien[-3] == "t" and lien[-4] == "h" and lien[-5] == "."):
+            arr.append(lien)
+        if(lien[-1] == "p" and lien[-2] == "h" and lien[-3] == "p" and lien[-4] == "."):
+            arr.append(lien)
+    print("ahor next")
+    for m in arr:
+        print(m)"""
+    
+   
 
 
 
@@ -94,5 +117,5 @@ def scan_xss(url):
 
 
 if __name__ == "__main__":
-    url = "https://juice-shop.herokuapp.com/#/contact"
+    url = "http://localhost:3000/#/search"
     print(scan_xss(url))
