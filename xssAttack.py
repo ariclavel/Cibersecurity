@@ -8,17 +8,10 @@ from urllib.parse import urljoin
 
 #https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html
 
-def get_all_forms(url):
-    #bs = BeautifulSoup(r.read(), "html.parser")
-    soup = bs(requests.get(url).content, "html.parser")
-    #r = urlopen(url)
-    
-    print(soup)
+def getForms(url):
 
-    return soup.find_all("input")
-   
-    
-    
+    req = bs(requests.get(url).content, "html.parser")
+    return req.find_all("form") 
     """arr = []
     for link in bs.find_all("a"):
         lien = link.get("href")
@@ -31,15 +24,9 @@ def get_all_forms(url):
     print("ahor next")
     for m in arr:
         print(m)"""
-    
    
-
-
-
 def get_form_details(form):
-    """
-    This function extracts all possible useful information about an HTML `form`
-    """
+   
     details = {}
     # get the form action (target url)
     action = form.attrs.get("action", "").lower()
@@ -59,22 +46,17 @@ def get_form_details(form):
 
 
 def submit_form(form_details, url, value):
-    """
-    Submits a form given in `form_details`
-    Params:
-        form_details (list): a dictionary that contain form information
-        url (str): the original URL that contain that form
-        value (str): this will be replaced to all text and search inputs
-    Returns the HTTP Response after form submission
-    """
+   
     # construct the full URL (if the url provided in action is relative)
     target_url = urljoin(url, form_details["action"])
+    print(target_url)
+    print(form_details)
     # get the inputs
     inputs = form_details["inputs"]
     data = {}
     for input in inputs:
         # replace all text and search values with `value`
-        if input["type"] == "text" or input["type"] == "search":
+        if input["type"] == "text" or input["type"] == "search" or input["type"] == "submit":
             input["value"] = value
         input_name = input.get("name")
         input_value = input.get("value")
@@ -86,36 +68,60 @@ def submit_form(form_details, url, value):
     print(f"[+] Submitting malicious payload to {target_url}")
     print(f"[+] Data: {data}")
     if form_details["method"] == "post":
+        print(target_url)
         return requests.post(target_url, data=data)
     else:
         # GET request
+        print(target_url)
         return requests.get(target_url, params=data)
 
 
-def scan_xss(url):
-    """
-    Given a `url`, it prints all XSS vulnerable forms and 
-    returns True if any is vulnerable, False otherwise
-    """
-    # get all the forms from the URL
-    forms = get_all_forms(url)
-    print(f"[+] Detected {len(forms)} forms on {url}.")
-    js_script = "<Script>alert('hi')</scripT>"
-    # returning value
+def detectXSS(url):
+    
+    # take all the forms presents in the url 
+    forms = getForms(url)
+    if(len(forms) == 0):
+        print("Not forms")
+        return False
+    else:
+        print(f"{len(forms)} forms...")
+    
+    #Here we take an easy exemple but normally we do it with a big list of scripts
+    js_script = "<h1>hello world</h1>"
+
     is_vulnerable = False
     # iterate over all forms
     for form in forms:
-        form_details = get_form_details(form)
-        content = submit_form(form_details, url, js_script).content.decode()
-        if js_script in content:
-            print(f"[+] XSS Detected on {url}")
-            print(f"[*] Form details:")
-            pprint(form_details)
-            is_vulnerable = True
-            # won't break because we want to print available vulnerable forms
-    return is_vulnerable
+        details = {}
+        # get the form action (target url)
+        action = form.attrs.get("action", "").lower()
+        # get the form method 
+        method = form.attrs.get("method", "get").lower()
+        # get name and type
+        inputs = []
+        #req = bs(requests.get(url).content, "html.parser")
+        for input_tag in form.find_all("input"):
+            print("aqui si ")
+            input_type = input_tag.attrs.get("type", "text")
+            input_name = input_tag.attrs.get("name")
+            inputs.append({"type": input_type, "name": input_name})
+            # create the dictionnary
+            details["action"] = action
+            details["method"] = method
+            details["inputs"] = inputs
+            cont = submit_form(details, url, js_script).content.decode()
+          
+            if js_script in cont:
+                print(f"XSS DETECTED!!!!!!")
+                print(f"IN FORM:")
+                pprint(details)
+                is_vulnerable = True
+                # won't break because we want to print available vulnerable forms
+            
+                
+        return is_vulnerable
 
 
 if __name__ == "__main__":
-    url = "http://localhost:3000/#/search"
-    print(scan_xss(url))
+    url = "http://testphp.vulnweb.com/search.php"
+    print(detectXSS(url))
