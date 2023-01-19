@@ -9,19 +9,7 @@
 
     <link rel="stylesheet" href="/static/style.css">
     <script src="https://kit.fontawesome.com/14663d3968.js" crossorigin="anonymous"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type=text/javascript>
-            $(function() {
-              $('a#test').on('click', function(e) {
-                e.preventDefault()
-                $.getJSON('/background_process_test',
-                    function(data) {
-                  //do nothing
-                });
-                return false;
-              });
-            });
-    </script>
+    
 </head>
 <body>
     <div class="header-container">
@@ -74,17 +62,19 @@
          <div class="cards-all">
             
             <div class="card">
-                <h1 class="header-text">IP address for testing:</h1>
+                <h1 style="color:white;" class="header-text">IP address for testing: </h1>
+                <p style="color:white;">{{titulo}}</p>
                     <div class="start-container">
   
                     <div class="description">
                         <div class="grey-container">
                             <div class="left">
                                 <h3 class="sub-header"><br><br><br><br><br></h3>
-                                <input class="inp" ></input>
-                                <button class="button" onclick = "window.location.href='{{ url_for( 'move_forward') }}';">Test -></button>
-                                <a href=# id=test><button class='btn btn-default'>Test</button></a>
-                            
+                                <form action="/forward/" method="POST">
+                                    <input type = "text" name="lien" id = "lien" class="inp" ></input>
+                                    <button type="submit" class="button">Test -></button>
+          
+                                </form>
                             </div>
                         </div>
                         
