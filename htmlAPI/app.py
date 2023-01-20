@@ -2,7 +2,7 @@
 from flask import Flask, render_template, Response, request, redirect, url_for
 
 app = Flask(__name__)
-import xssAttack.py
+import xssAttack
 #rendering the HTML page which has the button
 @app.route('/')
 def json():
@@ -20,8 +20,13 @@ def move_forward():
         print(req)
         a = req.get("lien")
         print(a)
+        # TODO make it dynamic
         url = "http://testphp.vulnweb.com/artists.php?artist=1"
         b = xssAttack.attackSql(a)
         return render_template("main.html", titulo=b)
+    
+@app.route("/info/", methods=['GET'])
+def info():
+    return render_template("info.html")
  
     
