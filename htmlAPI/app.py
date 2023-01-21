@@ -2,7 +2,19 @@
 from flask import Flask, render_template, Response, request, redirect, url_for
 
 app = Flask(__name__)
-import xssAttack
+# importing the attacks
+from attack_modules.xss.xssAttack import detectXSS as xss_attack
+from attack_modules.xss.xss2 import attack as xss2_attack
+from attack_modules.xss.xss3 import attack as xss3_attack
+
+from attack_modules.xxe.xxe import upload_file as xxe_attack
+
+from attack_modules.sql_injection.sqlInjection import attackSql as sql_attack
+
+from attack_modules.csrf.check_csrf import check_csrf_vuln as csrf_attack
+
+from attack_modules.crlf.check_crlf import check_crlf_vuln as crlf_attack
+
 #rendering the HTML page which has the button
 @app.route('/')
 def json():
@@ -18,15 +30,52 @@ def move_forward():
     if request.method == "POST":
         req = request.form
         print(req)
-        a = req.get("lien")
-        print(a)
-        # TODO make it dynamic
-        url = "http://testphp.vulnweb.com/artists.php?artist=1"
-        b = xssAttack.attackSql(a)
-        return render_template("main.html", titulo=b)
-    
+        # initializing the test dictionary
+        attack_report = {
+                "url": req.get("lien"),
+                "xss1":False,
+                "xss2":False,
+                "xss3":False,
+                "xxe":False,
+                "sql":False,
+                "csrf":False,
+                "crlf":False,
+                }
+        # making the link work for the HTTP requests
+        url = "https://" + req.get("lien")
+
+        # testing for all the implemented attacks
+        try:
+            attack_report["xss1"] =  xss_attack(url)
+        except:
+            pass
+        try:
+            attack_report["xss2"] =  xss2_attack(url)
+        except:
+            pass
+        try:
+            attack_report["xss3"] =  xss3_attack(url)
+        except:
+            pass
+        try:
+            attack_report["xxe"]  =  xxe_attack(url)
+        except:
+            pass
+        try:
+            attack_report["sql"]  =  sql_attack(url)
+        except:
+            pass
+        try:
+            attack_report["csrf"] =  csrf_attack(url)
+        except:
+            pass
+        try:
+            attack_report["crlf"] =  crlf_attack(url)
+        except:
+            pass
+
+        return render_template("main.html", attack_report = attack_report)
+
 @app.route("/info/", methods=['GET'])
 def info():
     return render_template("info.html")
- 
-    

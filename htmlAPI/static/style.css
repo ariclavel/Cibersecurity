@@ -11,7 +11,7 @@ body{
 .section{
     display:flex;
     align-items:flex-start;
-    
+
 }
 .card{
     background-color: #b7def8;
@@ -25,7 +25,7 @@ body{
     box-shadow: 0 0 50px -10px rgb(102, 177, 215);
     padding:10px 15px 10px 15px;
 
-   
+
 }
 
 .side-logo{
@@ -36,7 +36,7 @@ body{
 }
 .ïmg-side{
     height:200px;
-   
+
 }
 
 .card{
@@ -52,9 +52,9 @@ body{
     align-items: center;
     flex-direction: column;
     gap:1em;
-   
-    
-    
+
+
+
 }
 .start-item{
     display:flex;
@@ -64,15 +64,15 @@ body{
 .start-item p{
     font-weight:bold;
     color:rgb(102, 177, 215);
-    
+
 }
 .start-item i{
-   
+
     color:rgb(13, 11, 128);
     padding:10px;
     background-color:rgb(102, 177, 215);
     border-radius:5px;
-    
+
 }
 .video-cont{
     border-radius: 5px;
@@ -92,8 +92,8 @@ body{
     justify-content: space-between;
     margin:1em;
     padding:1em;
-    
-    
+
+
 }
 .section{
     background-color: #000000;
@@ -108,7 +108,7 @@ body{
     border: none;
     padding-left:2em;
     padding-right:2em;
-   
+
 }
 .inp{
     width: 750px;
@@ -116,7 +116,7 @@ body{
 .button:hover{
   background-color: rgb(80, 127, 148);
   transition-duration: 0.2s, 0.4s, 0.2s, 0.2s;
-  transition-timing-function: ease, ease, ease, 
+  transition-timing-function: ease, ease, ease,
 }
 .left{
     display: flex;
@@ -126,13 +126,13 @@ body{
 .description p{
     font-weight: 400;
     color:#3a88bc;
-    
+
 }
 
 .header-container{
     background-color: #000000;
     box-shadow: 0 1px 3px rgb(72, 122, 193), 0 1px 0 rgb(131, 152, 192);;
-    
+
 }
 .header{
     display: flex;
@@ -144,8 +144,8 @@ body{
   align-items: center;
   gap:10px;
   margin-left: 10px;
-  
-  
+
+
 }
 .menu{
     display: flex;
@@ -163,7 +163,7 @@ nav .menu-items a{
 }
 
 .menu-items a::after{
-   
+
   position: absolute;
   content: "";
   top: 100%;
@@ -172,7 +172,7 @@ nav .menu-items a{
   height: 3px;
   border-bottom: 1px solid rgb(4, 3, 89);
   transform: scaleX(0);
- 
+
 
 }
 
@@ -180,7 +180,7 @@ nav .menu-items a{
 
 .menu-items a:hover::after {
     transform: scaleX(1);
-    
+
     transform-origin:left;
     transition: transform .2s ease-in-out
   }
@@ -197,7 +197,7 @@ nav .menu-items a{
     width:100px;
 }
 .but:hover{
-   
+
   border: 2px solid rgb(13, 11, 128);
   padding:5px;
   background-color: transparent;
@@ -212,4 +212,15 @@ nav .menu-items a{
 .sub-header{
     color: #b7def8;
 }
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
 
+td, th {
+  background-color: #dddddd;
+  border: 1px solid #000000;
+  text-align: left;
+  padding: 8px;
+}
