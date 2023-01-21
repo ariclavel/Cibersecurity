@@ -1,4 +1,0 @@
-make a get requeest on a given ip and
-check for "httponly, x-req-with,cors headers, referrer"
-check for csrf tokens
-check for X-FRAME same origin policy/same-site cookie
