@@ -17,6 +17,8 @@ from attack_modules.crlf.check_crlf import check_crlf_vuln as crlf_attack
 
 from attack_modules.dos.dosAtack import dos_attack as execute_dos_attack
 
+from attack_modules.brute_force.bruteForce import bruteForceAttack as brute_force_attack
+
 #rendering the HTML page which has the button
 @app.route('/')
 def json():
@@ -87,3 +89,13 @@ def info():
 def dos_attack():
     is_vulnable, message = execute_dos_attack(request.args.get("url"))
     return ({"is_vulnable": is_vulnable, "message": message})
+
+@app.route("/bruteForce", methods=['POST'])
+def brute_force():
+    req = request.form
+    attack_report = {
+        "vulnareble": req.get("login_url"),
+        "message":False,
+    }
+    attack_report["vulnareble"], attack_report["message"] = brute_force_attack(req.get("login_url"), req.get("username"), req.get("error"))
+    return render_template("bruteForceReport.html", attack_report = attack_report)

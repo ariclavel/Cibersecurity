@@ -101,6 +101,13 @@ body{
     padding:1em;
 }
 
+.blue-sub-container{
+    background-color: #181818;
+    border-radius: 5px;
+    margin:1em;
+    padding:1em;
+}
+
 .section{
     background-color: #000000;
 }
@@ -246,3 +253,7 @@ td, th {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+label {
+    color:white;
+}

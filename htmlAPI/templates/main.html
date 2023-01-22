@@ -135,6 +135,19 @@
                     </div>
                     {% endif %}
                   </div>
+                  </div>
+                  <div class="blue-sub-container">
+                  <h2 style="color:white;">Brute force attack</h2>
+                  <form action="/bruteForce" method="POST">
+                     <label for="login_url">Login url</label>
+                     <input type = "text" name="login_url" id="login_url" class="inp" ></input>
+                     <label for="username">Username</label>
+                     <input type = "text" name="username" id="username" class="inp" ></input>
+                     <label for="error">Error message</label>
+                     <input type = "text" name="error" id ="error" class="inp" ></input>
+                     <br>
+                     <button type="submit" class="button">Try brute force attack</button>
+                 </form>
                </div>
             </div>
          </div>

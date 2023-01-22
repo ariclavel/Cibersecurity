@@ -4,6 +4,7 @@ isVulnerable = False
 message = ""
 
 def crack(url, username, error_message, passwords):
+    print("Hello world")
     count = 0
     for password in passwords:
         password = password.strip()
@@ -32,9 +33,7 @@ def bruteForceAttack(url, username, errorMessage):
     username = username
 
     try:
-        with open("passwords.txt", "r") as passwords:
+        with open("attack_modules/brute_force/passwords.txt", "r") as passwords:
             return crack(url, username, errorMessage, passwords)
     except:
-        print("Error")
-
-# print(bruteForceAttack("http://localhost:3000/#/login", "user@user.com", "Invalid email or password."))
+        return True, "Error"
