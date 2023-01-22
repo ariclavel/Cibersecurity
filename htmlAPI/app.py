@@ -42,9 +42,13 @@ def move_forward():
                 "crlf":False,
                 }
         # making the link work for the HTTP requests
-        url = "https://" + req.get("lien")
+        url = "http://" + req.get("lien")
 
         # testing for all the implemented attacks
+        try:
+            attack_report["xxe"]  =  xxe_attack(url)
+        except:
+            pass
         try:
             attack_report["xss1"] =  xss_attack(url)
         except:
@@ -55,10 +59,6 @@ def move_forward():
             pass
         try:
             attack_report["xss3"] =  xss3_attack(url)
-        except:
-            pass
-        try:
-            attack_report["xxe"]  =  xxe_attack(url)
         except:
             pass
         try:
