@@ -15,6 +15,8 @@ from attack_modules.csrf.check_csrf import check_csrf_vuln as csrf_attack
 
 from attack_modules.crlf.check_crlf import check_crlf_vuln as crlf_attack
 
+from attack_modules.dos.dosAtack import dos_attack as execute_dos_attack
+
 #rendering the HTML page which has the button
 @app.route('/')
 def json():
@@ -79,3 +81,14 @@ def move_forward():
 @app.route("/info/", methods=['GET'])
 def info():
     return render_template("info.html")
+
+#background process happening without any refreshing
+@app.route('/dos')
+def dos_attack():
+    # is_vulnable, message = execute_dos_attack("http://127.0.0.1:3000/#/")
+    # print("Response by dos")
+    # print(is_vulnable)
+    # print(message)
+    print("Dos")
+    print(request.data)
+    return ({"is_vulnable": "is_vulnable", "message": "message"})

