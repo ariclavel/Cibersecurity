@@ -85,10 +85,5 @@ def info():
 #background process happening without any refreshing
 @app.route('/dos')
 def dos_attack():
-    # is_vulnable, message = execute_dos_attack("http://127.0.0.1:3000/#/")
-    # print("Response by dos")
-    # print(is_vulnable)
-    # print(message)
-    print("Dos")
-    print(request.data)
-    return ({"is_vulnable": "is_vulnable", "message": "message"})
+    is_vulnable, message = execute_dos_attack(request.args.get("url"))
+    return ({"is_vulnable": is_vulnable, "message": message})
