@@ -7,7 +7,9 @@ from attack_modules.xss.xssAttack import detectXSS as xss_attack
 from attack_modules.xss.xss2 import attack as xss2_attack
 from attack_modules.xss.xss3 import attack as xss3_attack
 
-from attack_modules.xxe.xxe import upload_file as xxe_attack
+from attack_modules.xxe.error_based_xxe import upload_file as xxe_attack
+from attack_modules.xxe.inbound_xxe import inboundxxe as inbound_xxe_attack
+from attack_modules.xxe.oob_xxe import oob_xxe as oob_xxe_attack
 
 from attack_modules.sql_injection.sqlInjection import attackSql as sql_attack
 
@@ -51,6 +53,14 @@ def move_forward():
         # testing for all the implemented attacks
         try:
             attack_report["xxe"]  =  xxe_attack(url)
+        except:
+            pass
+        try:
+            inbound = inbound_xxe_attack(url)
+        except:
+            pass
+        try:
+            oob_xxe = oob_xxe_attack(url)
         except:
             pass
         try:
