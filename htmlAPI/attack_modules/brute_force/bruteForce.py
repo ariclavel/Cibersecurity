@@ -4,14 +4,12 @@ isVulnerable = False
 message = ""
 
 def crack(url, username, error_message, passwords):
-    print("Hello world")
     count = 0
     for password in passwords:
         password = password.strip()
         count = count + 1
         data_dict = {"email": username,"password": password, "Log In":"submit"}
         response = requests.post(url, data=data_dict)
-        print(response)
         if error_message in str(response.content):
             isVulnerable = True
             pass
