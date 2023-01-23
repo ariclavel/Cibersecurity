@@ -108,8 +108,11 @@ def execute_attack(target, target_port):
         return is_vulnable, message
 
 def dos_attack(url):
-    port = int(url.split(":")[2][0:4])
-    address = url.split(":")[1][2:]
-    return execute_attack(address, port)
+    try:
+        port = int(url.split(":")[2][0:4])
+        address = url.split(":")[1][2:]
+        return execute_attack(address, port)
+    except:
+        return None, "It seems that you have tricked the program. \"Good job.\""
     
 
