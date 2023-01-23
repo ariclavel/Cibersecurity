@@ -93,6 +93,15 @@ def move_forward():
 @app.route("/info/", methods=['GET'])
 def info():
     return render_template("info.html")
+@app.route("/info-sec/", methods=['GET'])
+def infoSec():
+    return render_template("info-sec.html")
+@app.route("/contact/", methods=['GET'])
+def infoSec():
+    return render_template("contact.html")
+@app.route("/tools/", methods=['GET'])
+def infoSec():
+    return render_template("tools.html")
 
 #background process happening without any refreshing
 @app.route('/dos')
