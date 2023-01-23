@@ -39,6 +39,7 @@ def move_forward():
         # initializing the test dictionary
         attack_report = {
                 "url": req.get("lien"),
+                "dtd_file": req.get("dtd_file"),
                 "xss1":False,
                 "xss2":False,
                 "xss3":False,
@@ -56,11 +57,11 @@ def move_forward():
         except:
             pass
         try:
-            inbound = inbound_xxe_attack(url)
+            oob_xxe = oob_xxe_attack(url, req.get("dtd_file"))
         except:
             pass
         try:
-            oob_xxe = oob_xxe_attack(url)
+            inbound = inbound_xxe_attack(url)
         except:
             pass
         try:

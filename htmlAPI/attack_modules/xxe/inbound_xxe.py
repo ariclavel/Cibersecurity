@@ -4,7 +4,7 @@ import requests
 # url = "http://127.0.0.1:8080/WebGoat/xxe/content-type"
 
 def inboundxxe(url):
-    print("starting the xxe attack in " + url + " endpint...\n")
+    print("starting the xxe attack in " + url + " endpoint...\n")
     is_vulnerable = False
     headers = {'Content-Type': 'application/xml'}
     cookies = {'JSESSIONID': 'PZo86PHS-Wh1PZmPeLUfA6T5MYrNo6OQAhVbwVKy'}
