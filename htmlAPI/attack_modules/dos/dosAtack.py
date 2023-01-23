@@ -35,7 +35,6 @@ def attack():
             sendRequest()
             global attack_num
             attack_num += 1
-            # print("Attacks: " + str(attack_num)) 
         except BrokenPipeError:
             print("BrokenPipeError")    
         except TimeoutError:
@@ -73,7 +72,7 @@ def execute_attack(target, target_port):
             break
 
     try:
-        # print("Let's try again if page works...")
+        # Let's try again if page works...
         sendRequest()
     except TimeoutError:
         print("Attacked succeeded!")
