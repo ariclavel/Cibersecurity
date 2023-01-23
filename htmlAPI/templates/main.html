@@ -10,7 +10,7 @@
       <script src="https://kit.fontawesome.com/14663d3968.js" crossorigin="anonymous"></script>
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
          <script type=text/javascript>
-            $(function() {         
+            $(function() {
                $('a#dos').on('click', function(e) {
                   var attack_url = document.getElementById("attack_url").textContent
                   e.preventDefault()
@@ -36,20 +36,20 @@
             </div>
             <nav class="menu">
                <div class="menu-items">
-                  <a href="main.html">Try attacks in your IP address</a>
+                  <a href="/main/">Try attacks in your IP address</a>
                </div>
                <div class="menu-items">
                   <a href="{{url_for('info')}}">All about attacks</a>
                </div>
                <div class="menu-items">
-                  <a href="info-sec.html">All about security
+                  <a href="/info-sec/">All about security
                   </a>
                </div>
                <div class="menu-items">
-                  <a href="tools.html">Useful tools</a>
+                  <a href="/tools/">Useful tools</a>
                </div>
                <div class="menu-items">
-                  <a href="contact.html">Contact-Us</a>
+                  <a href="/contact/">Contact-Us</a>
                </div>
             </nav>
             <div>
@@ -107,8 +107,16 @@
                            <td>{{attack_report['xss3']}}</td>
                         </tr>
                         <tr>
-                           <td>XXE</td>
+                           <td>Error Based XXE</td>
                            <td>{{attack_report['xxe']}}</td>
+                        </tr>
+                        <tr>
+                           <td>In band XXE</td>
+                           <td>check the webpage</td>
+                        </tr>
+                        <tr>
+                           <td>Out of band XXE</td>
+                           <td>check your server for a request</td>
                         </tr>
                         <tr>
                            <td>SQL_attack</td>
@@ -131,7 +139,7 @@
                            <div class="loader" id="dos_loader" style="display: none"></div>
                               <form>
                                  <a href=# id=dos><button class='button'>DOS Attack</button></a>
-                              </form>                                                     
+                              </form>
                     </div>
                     {% else %}                 
                     <div class="blue-sub-container">

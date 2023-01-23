@@ -7,7 +7,9 @@ from attack_modules.xss.xssAttack import detectXSS as xss_attack
 from attack_modules.xss.xss2 import attack as xss2_attack
 from attack_modules.xss.xss3 import attack as xss3_attack
 
-from attack_modules.xxe.xxe import upload_file as xxe_attack
+from attack_modules.xxe.error_based_xxe import upload_file as xxe_attack
+from attack_modules.xxe.inbound_xxe import inboundxxe as inbound_xxe_attack
+from attack_modules.xxe.oob_xxe import oob_xxe as oob_xxe_attack
 
 from attack_modules.sql_injection.sqlInjection import attackSql as sql_attack
 
@@ -54,6 +56,14 @@ def move_forward():
         except:
             pass
         try:
+            inbound = inbound_xxe_attack(url)
+        except:
+            pass
+        try:
+            oob_xxe = oob_xxe_attack(url)
+        except:
+            pass
+        try:
             attack_report["xss1"] =  xss_attack(url)
         except:
             pass
@@ -83,6 +93,15 @@ def move_forward():
 @app.route("/info/", methods=['GET'])
 def info():
     return render_template("info.html")
+@app.route("/info-sec/", methods=['GET'])
+def infoSec():
+    return render_template("info-sec.html")
+@app.route("/contact/", methods=['GET'])
+def contact():
+    return render_template("contact.html")
+@app.route("/tools/", methods=['GET'])
+def tools():
+    return render_template("tools.html")
 
 #background process happening without any refreshing
 @app.route('/dos')
