@@ -13,8 +13,7 @@ def upload_file(site):
     site = site+"/file-upload"
     files = {'file': open(filename, 'rb')}
     response = requests.post(site, files=files)
-    # print(response.text)
-    if (response.text.find("/usr/bin")) :
+    if (response.text.find("/usr/bin") != -1) :
         print("xxe is possible!")
         is_vulnerable = True
     return is_vulnerable

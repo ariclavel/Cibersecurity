@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, Response, request, redirect, url_for
+from flask import Flask, render_template, Response, request, redirect, url_for, send_file
 
 app = Flask(__name__)
 # importing the attacks
@@ -79,3 +79,10 @@ def move_forward():
 @app.route("/info/", methods=['GET'])
 def info():
     return render_template("info.html")
+
+@app.route("/evildtd/", methods=["GET"])
+def evildtd():
+    # the evil dtd
+    evil = "attack_resources/evil.dtd"
+    # send the file in the response
+    return send_file(evil, mimetype='text/plain')
