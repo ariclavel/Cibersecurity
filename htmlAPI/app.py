@@ -87,10 +87,10 @@ def info():
 def infoSec():
     return render_template("info-sec.html")
 @app.route("/contact/", methods=['GET'])
-def infoSec():
+def contact():
     return render_template("contact.html")
 @app.route("/tools/", methods=['GET'])
-def infoSec():
+def tools():
     return render_template("tools.html")
 
 #background process happening without any refreshing
