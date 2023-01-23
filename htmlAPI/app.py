@@ -4,8 +4,6 @@ from flask import Flask, render_template, Response, request, redirect, url_for, 
 app = Flask(__name__)
 # importing the attacks
 from attack_modules.xss.xssAttack import detectXSS as xss_attack
-from attack_modules.xss.xss2 import attack as xss2_attack
-from attack_modules.xss.xss3 import attack as xss3_attack
 
 from attack_modules.xxe.error_based_xxe import upload_file as xxe_attack
 from attack_modules.xxe.inbound_xxe import inboundxxe as inbound_xxe_attack
@@ -41,8 +39,6 @@ def move_forward():
                 "url": req.get("lien"),
                 "dtd_file": req.get("dtd_file"),
                 "xss1":False,
-                "xss2":False,
-                "xss3":False,
                 "xxe":False,
                 "sql":False,
                 "csrf":False,
@@ -66,14 +62,6 @@ def move_forward():
             pass
         try:
             attack_report["xss1"] =  xss_attack(url)
-        except:
-            pass
-        try:
-            attack_report["xss2"] =  xss2_attack(url)
-        except:
-            pass
-        try:
-            attack_report["xss3"] =  xss3_attack(url)
         except:
             pass
         try:
