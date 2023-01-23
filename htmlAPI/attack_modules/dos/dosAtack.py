@@ -28,30 +28,6 @@ def sendRequest():
         print("Connection refused")
         return False
 
-def checkFailedRequests():
-    while True:
-        time.sleep(1)
-        global failed_requests
-        if failed_requests > 10:
-            print(str(failed_requests) + " requested failed")
-            break
-
-    try:
-        print("Let's try again if page works...")
-        sendRequest()
-    
-    except TimeoutError:
-        print("Connection failed")
-        time.sleep(1)
-        print("Attacked succeeded!")
-        global message
-        message = "Attacked succeeded!"
-        global is_vulnable
-        is_vulnable = True
-        testDone = True
-        # return is_vulnable, message
-
-
 
 def attack():
     while True:
@@ -88,8 +64,6 @@ def execute_attack(target, target_port):
         except BrokenPipeError:
             print(str(i) + " thread broken")
 
-    # checkThread = threading.Thread(target=checkFailedRequests)
-    # checkThread.start()
 
     while True:
         time.sleep(1)
